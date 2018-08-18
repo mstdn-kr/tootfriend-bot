@@ -11,5 +11,7 @@ const m = new Mastodon({
 const notice = m.stream('streaming/user');
 
 notice.on('message', (msg) => {
-    console.log(msg);
+    if(msg.event === 'notification' && msg.data.type === 'follow') {
+        m.post('follows', {uri: msg.data.account.acct});
+    }
 });
