@@ -15,7 +15,7 @@ module.exports = {
         return new Promise((success) => {
             fs.readFile(path.resolve(__dirname, 'data', acct), (err, content) => {
                 if(err || Date.now() - Number(content) >= dayLimit) {
-                    if(id.indexOf('@') !== -1) {
+                    if(acct.indexOf('@') !== -1) {
                         m.get('accounts/relationships', {id}).then((rel) => {
                             if(rel[0].following) {
                                 success(true);
