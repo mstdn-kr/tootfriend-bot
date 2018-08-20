@@ -17,7 +17,7 @@ module.exports = {
                 if(err || Date.now() - Number(content) >= dayLimit) {
                     if(acct.indexOf('@') !== -1) {
                         m.get('accounts/relationships', {id}).then((rel) => {
-                            if(rel[0].following) {
+                            if(rel.data[0].following) {
                                 success(true);
                             }
                             else {}
