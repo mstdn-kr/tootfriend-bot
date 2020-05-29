@@ -15,7 +15,7 @@ const notice = m.stream('streaming/user');
 notice.on('message', (msg) => {
     console.log('[notice]', msg);
     if(msg.event === 'notification' && msg.data.type === 'follow') {
-        m.post('follows', {uri: msg.data.account.acct});
+        m.post(`accounts/${msg.data.account.id}/follow`);
     }
 });
 
