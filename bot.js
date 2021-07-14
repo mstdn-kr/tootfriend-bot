@@ -19,9 +19,7 @@ notice.on('message', (msg) => {
     }
 });
 
-const tag = m.stream('streaming/hashtag', {tag: '툿친소'});
-
-tag.on('message', async(msg) => {
+async function boost(msg) {
     console.log('[update]', msg);
     if(msg.event === 'update' && !msg.data.in_reply_to_id && !msg.data.reblog) {
         if(await limit.check(msg.data.account.acct, msg.data.account.id)) {
@@ -29,4 +27,7 @@ tag.on('message', async(msg) => {
             limit.set(msg.data.account.acct);
         }
     }
-});
+}
+
+m.stream('streaming/hashtag', {tag: '툿친소'}).on('message', boost);
+m.stream('streaming/hashtag', {tag: '뿌친소'}).on('message', boost);
