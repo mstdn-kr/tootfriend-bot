@@ -8,16 +8,6 @@ const m = new Mastodon({
     access_token: process.env.ACCESS_TOKEN,
     api_url: process.env.API_URL
 });
-limit.init(m);
-
-const notice = m.stream('streaming/user');
-
-notice.on('message', (msg) => {
-    console.log('[notice]', msg);
-    if(msg.event === 'notification' && msg.data.type === 'follow') {
-        m.post(`accounts/${msg.data.account.id}/follow`);
-    }
-});
 
 async function boost(msg) {
     console.log('[update]', msg);
