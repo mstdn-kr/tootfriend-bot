@@ -31,3 +31,4 @@ async function boost(msg) {
 
 m.stream('streaming/hashtag', {tag: '툿친소'}).on('message', boost);
 m.stream('streaming/hashtag', {tag: '뿌친소'}).on('message', boost);
+m.stream('streaming/hashtag', {tag: '마친소'}).on('message', boost);
