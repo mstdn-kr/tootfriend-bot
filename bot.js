@@ -9,12 +9,18 @@ const m = new Mastodon({
     api_url: process.env.API_URL
 });
 
+let dup = [];
+
 async function boost(msg) {
     console.log('[update]', msg);
     if(msg.event === 'update' && !msg.data.in_reply_to_id && !msg.data.reblog) {
-        if(await limit.check(msg.data.account.acct, msg.data.account.id)) {
-            await m.post(`statuses/${msg.data.id}/reblog`, {});
-            limit.set(msg.data.account.acct);
+        if(!dup.includes(msg.data.id)) {
+            dup.push(msg.data.id);
+            if(await limit.check(msg.data.account.acct, msg.data.account.id)) {
+                await m.post(`statuses/${msg.data.id}/reblog`, {});
+                await limit.set(msg.data.account.acct);
+                dup.splice(dup.indexOf(msg.data.id), 1);
+            }
         }
     }
 }
